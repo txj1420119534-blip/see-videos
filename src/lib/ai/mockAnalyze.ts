@@ -3,192 +3,129 @@ import type { AnalyzeRequest, AnalyzeResponse, ScenarioId } from './schema';
 export const MOCK_RESULTS: Record<ScenarioId, AnalyzeResponse> = {
   bixie: {
     mode: 'mock',
-    scenarioId: 'bixie',
-    lingruiName: '辟邪',
-    roleTitle: '反种草守护灵',
-    resultTitle: '辟邪鼠标种草鉴定',
-    oneLineJudgement: '慎买，不是不能买，是先把参数和手感核清楚。',
-    confidenceLabel: '建议：慎买',
-    tags: ['低价平替', '外设种草', '先核验'],
+    roleId: 'bixie',
+    roleName: '辟邪',
+    openingLine: '辟邪提醒你，慎重！',
+    emotionRead: '这条很会让人心动：67 块、无线、像经典款，还有首发福利，手指确实容易往购买键上飘。',
+    videoRead: '辟邪看见它主打前行者 A6、67 块 1 毛 5、无线类 G102、网页驱动和灯条还原。',
+    coreInsight: '这不是不能买，而是别只因为“像 G102 又便宜”就立刻买。',
     sections: [
       {
-        title: '它真正卖你的东西',
-        items: ['67 块无线类 G102，是用低价锚点降低犹豫。', '网页驱动和灯条还原，是在强化“像大牌”的想象。'],
-      },
-      {
-        title: '先别直接当真',
-        items: ['“原汁原味”“完美还原”是视频说法，不等于已验证。', '手感、延迟、品控、售后和真实续航都要另查。'],
-      },
-      {
-        title: '适合谁',
-        items: ['预算很低、只想要入门无线鼠标的人可以观察。', '打竞技游戏、很吃手感和稳定性的人先别冲。'],
+        title: '辟邪先替你挡住的草',
+        items: ['低价是第一钩子，容易压过你对手感和售后的判断。', '“无线类 G102”是平替叙事，不等于实际手感完全一样。', '首发福利会制造时间压力，适合先查清再下单。'],
       },
       {
         title: '买前 3 问',
-        items: ['有没有独立评测测延迟和续航？', '网页驱动支持哪些系统和功能？', '赠品是不是我真的需要的东西？'],
+        items: ['你的手型和握法真的适合它吗？', '续航、重量、传感器和售后有没有查到可靠信息？', '你是缺鼠标，还是只是被 67 元的氛围撞了一下？'],
       },
     ],
-    actionChips: ['列买前问题', '看核验点', '改成慎买清单'],
-    shareCard: {
-      title: '辟邪替我按住了低价鼠标冲动',
-      subtitle: '结论：慎买，先核验',
-      quote: '这条种草最会的不是讲鼠标，是让你觉得不买就亏。',
-      bullets: ['低价是锚点', '类 G102 需核验', '赠品别当刚需'],
-      footer: '灵瑞伴看 · 辟邪',
-    },
-    followUpQuestions: ['帮我列一份外设买前核验表', '这条视频哪些话最像营销？', '学生党应该怎么判断能不能买？'],
+    nextActions: ['先看 2 条非带货测评', '查清售后和退换规则', '24 小时后还想买再下单'],
+    memorySeed: '下次看到低价平替，辟邪会先提醒你把心跳和刚需分开。',
+    shareQuote: '辟邪替我挡住了一口草。',
+    tags: ['慎买', '种草避坑', '先别急'],
+    confidenceNote: '辟邪只按当前视频信息提醒，关键参数还要再核实。',
   },
   baize: {
     mode: 'mock',
-    scenarioId: 'baize',
-    lingruiName: '白泽',
-    roleTitle: '教程拆解灵',
-    resultTitle: '白泽备考行动卡',
-    oneLineJudgement: '这条不是上岸保证书，是一份要降压执行的备考清单。',
-    confidenceLabel: '已拆成 4 步',
-    tags: ['备考规划', '行动卡', '不贩焦虑'],
+    roleId: 'baize',
+    roleName: '白泽',
+    openingLine: '白泽帮你把这团线拆开。',
+    emotionRead: '“一次性上岸”这类话会让人很想立刻照做，白泽先把口号和方法分开。',
+    videoRead: '白泽看见这条在讲考公考编：至少留一年、推掉聚会、别只刷模拟题、报班要谨慎。',
+    coreInsight: '这条可以当备考提醒，但不能当上岸保证书。',
     sections: [
       {
-        title: '视频真正讲了什么',
-        items: ['核心是把备考当长期项目，不是临时抱佛脚。', '它强调减少干扰、稳定刷题、谨慎选择报班。'],
+        title: '白泽拆出的三根线',
+        items: ['第一根是时间线：长期备考比临时冲刺更稳。', '第二根是方法线：真题和复盘比只刷模拟题更关键。', '第三根是风险线：报班不是护身符，选错会耗钱耗心力。'],
       },
       {
-        title: '照着做的 4 步',
-        items: ['先写清考试类型、日期和每天可用时间。', '把一年拆成基础、强化、冲刺三个阶段。', '真题优先，模拟题只做补充。', '报班前先核课程、退款和口碑。'],
-      },
-      {
-        title: '容易踩坑',
-        items: ['推掉所有聚会不一定适合每个人，要保留恢复时间。', '机构选错会消耗钱和心态，不要被“包过感”带走。'],
-      },
-      {
-        title: '今天先做一步',
-        items: ['拿纸写下未来 7 天每天能学多久。', '只选一个科目，做 30 分钟真题摸底。'],
+        title: '今天先落一小步',
+        items: ['写下考试类型、剩余时间和每天可用时长。', '只选一个科目做 30 分钟真题摸底。', '把“我要上岸”改成“今天先弄懂一类题”。'],
       },
     ],
-    actionChips: ['生成 7 天计划', '拆第一步', '列报班核验点'],
-    shareCard: {
-      title: '白泽把上岸鸡血拆成了今天的一步',
-      subtitle: '备考行动卡',
-      quote: '先别被“一次性上岸”点燃，先把今天 30 分钟落地。',
-      bullets: ['长期规划', '真题优先', '机构谨慎'],
-      footer: '灵瑞伴看 · 白泽',
-    },
-    followUpQuestions: ['我只有三个月怎么改？', '帮我做低压力版备考表', '报班前要问机构什么？'],
+    nextActions: ['列 7 天可用时间', '做 30 分钟真题', '整理报班核验问题'],
+    memorySeed: '下次看到备考经验，白泽会先帮你分清“方法”和“口号”。',
+    shareQuote: '白泽把收藏变成了第一步。',
+    tags: ['看懂', '行动卡', '不承诺上岸'],
+    confidenceNote: '白泽不替任何机构背书，也不承诺考试结果。',
   },
   jiuwei: {
     mode: 'mock',
-    scenarioId: 'jiuwei',
-    lingruiName: '九尾',
-    roleTitle: '风格结构识别灵',
-    resultTitle: '九尾风格结构拆解',
-    oneLineJudgement: '别买同款，这条好看在日常到晚宴的结构切换。',
-    confidenceLabel: '适合结构迁移',
-    tags: ['不买同款', '风格迁移', '氛围感'],
+    roleId: 'jiuwei',
+    roleName: '九尾',
+    openingLine: '九尾觉得，你这样真好看。',
+    emotionRead: '这类变装视频容易让人想变成画面里的人，但九尾先把你拉回来：你不用换掉自己。',
+    videoRead: '九尾看见这条靠自然光、白色房间、米色西装牛仔、深蓝职场感和黑色亮片晚宴感撑起氛围。',
+    coreInsight: '这套好看的重点不是同款衣服，而是干净背景、明确轮廓和动作里的松弛感。',
     sections: [
       {
-        title: '它为什么好看',
-        items: ['米色西装和牛仔把办公室日常感稳住。', '深蓝西装让画面更冷静，亮片裙把晚宴感拉起来。'],
+        title: '九尾拆到的风格结构',
+        items: ['白色空间让整个人更干净。', '米色和深蓝形成从温柔到利落的切换。', '转身和长发动态让画面有故事感。'],
       },
       {
-        title: '可以抄什么',
-        items: ['抄“外套+内搭+利落下装”的层次。', '抄自然光、转身、近景微笑这种松弛镜头。', '抄从低调材质到亮面材质的反差。'],
-      },
-      {
-        title: '你的版本怎么变',
-        items: ['没有上传图时，先用衣柜里的西装或衬衫试结构。', '想更日常，就把亮片换成缎面、针织或小面积金属配饰。'],
-      },
-      {
-        title: '别硬抄',
-        items: ['别把博主滤镜当成衣服效果。', '别为了晚宴感牺牲自己的通勤场景。'],
+        title: '别硬抄的部分',
+        items: ['不要只买同款外套。', '不要忽略光线和背景。', '不要把博主的身形当成风格本身。'],
       },
     ],
-    actionChips: ['生成我的版本', '改成通勤版', '降低晚宴感'],
-    shareCard: {
-      title: '九尾说：别买同款，先抄结构',
-      subtitle: '风格迁移卡',
-      quote: '这条好看不是单品赢了，是日常感和晚宴感切换得顺。',
-      bullets: ['西装稳结构', '材质做反差', '镜头给松弛'],
-      footer: '灵瑞伴看 · 九尾',
-    },
-    followUpQuestions: ['我上传照片后帮我改', '帮我做上班版', '拍照姿态怎么学？'],
+    nextActions: ['先找一面干净浅色墙', '用同色系外套替代同款', '拍照时保留一次转身或侧身动作'],
+    memorySeed: '九尾会记住：你适合先保留自己，再借一点风格的光。',
+    shareQuote: '九尾说，我不用变成别人。',
+    tags: ['识风格', '不买同款', '做自己'],
   },
   tianlu: {
     mode: 'mock',
-    scenarioId: 'tianlu',
-    lingruiName: '天禄',
-    roleTitle: 'AI 技巧落地灵',
-    resultTitle: '天禄 AI 技巧落地包',
-    oneLineJudgement: '这条能做，但第一步是把 Key 放安全。',
-    confidenceLabel: '可执行：安全版',
-    tags: ['AI工具', '多模态', '安全落地'],
+    roleId: 'tianlu',
+    roleName: '天禄',
+    openingLine: '天禄接住了，咱们先跑第一步。',
+    emotionRead: '这条教程看着很神，很容易收藏后就睡在收藏夹里。天禄先把路铺短一点。',
+    videoRead: '天禄看见它在讲 Claude + DeepSeek 没多模态时，用豆包模型、API Key 和脚本补视觉识别能力。',
+    coreInsight: '这条能落地，但第一步不是炫技，是把 Key 放安全。',
     sections: [
       {
-        title: '目标是什么',
-        items: ['用一个视觉模型给 Claude/DeepSeek 补“看图”能力。', '脚本输入图片路径和问题，输出图片理解结果。'],
+        title: '天禄先备好三样',
+        items: ['一个可用的视觉模型接口。', '本地 Python 环境和一张测试图。', '只放在服务端或本地环境变量里的 API Key。'],
       },
       {
-        title: '准备什么',
-        items: ['准备可用的视觉模型接口和本地 Python 环境。', 'API Key 放到本地环境变量，不写进前端和公开仓库。'],
+        title: '最小开跑路线',
+        items: ['先让 AI 生成 vision.py。', '用测试图跑一次命令。', '跑通后再接进 Claude 或 Codex 的工作流。'],
       },
       {
-        title: '执行步骤',
-        items: ['让 AI 生成 vision.py，并说明输入参数格式。', '命令形如 python C:/tmp/vision.py <图片路径> [问题]。', '先用一张无隐私测试图跑通。'],
-      },
-      {
-        title: 'Key 安全红线',
-        items: ['不要把真实 Key 发到前端页面、截图或公开视频里。', '提交代码前检查 .env、日志和终端输出。'],
-      },
-      {
-        title: '失败先查这 3 个',
-        items: ['接口地址、模型名、Key 是否匹配。', '图片路径是否存在，格式是否被模型支持。', '报错先复制给 Codex 做最小修复。'],
+        title: '安全小铃铛',
+        items: ['Key 不进前端。', 'Key 不进公开仓库。', 'Key 不出现在截图和群聊里。'],
       },
     ],
-    actionChips: ['生成安全步骤', '列排错清单', '写 Codex 提示词'],
-    shareCard: {
-      title: '天禄把 AI 神技拆成了安全执行清单',
-      subtitle: 'Claude/DeepSeek 视觉补强',
-      quote: '别先炫技，先把 API Key 藏好。',
-      bullets: ['Key 只放服务端', '先用测试图跑通', '失败查接口和路径'],
-      footer: '灵瑞伴看 · 天禄',
-    },
-    followUpQuestions: ['帮我写一段给 Codex 的任务', 'Key 应该放在哪？', '脚本跑不通怎么排查？'],
+    nextActions: ['先建本地 .env', '用测试图跑一次', '失败先查 base_url 和模型名'],
+    memorySeed: '下次看到教程，天禄会先帮你找最小可执行步骤。',
+    shareQuote: '天禄把收藏夹推成了开始。',
+    tags: ['开跑', 'AI教程', 'Key安全'],
+    confidenceNote: '天禄会认真守住 API Key，不诱导你暴露密钥。',
   },
   xuangui: {
     mode: 'mock',
-    scenarioId: 'xuangui',
-    lingruiName: '玄龟',
-    roleTitle: '备考降噪陪伴灵',
-    resultTitle: '玄龟备考降噪卡',
-    oneLineJudgement: '你不用复制 207 天，先保住今天的一小步。',
-    confidenceLabel: '低电量版优先',
-    tags: ['备考降噪', '低负担', '稳住今天'],
+    roleId: 'xuangui',
+    roleName: '玄龟',
+    openingLine: '玄龟在这儿，先把声音调小。',
+    emotionRead: '看到“备考第 207 天”和“还有 58 天”，人很容易被别人的进度压住。玄龟先陪你把这口气放平。',
+    videoRead: '玄龟听见这条视频里有倒计时、长期备考和“谁懂啊”的压力感。',
+    coreInsight: '这条视频可以提醒你继续走，但不该拿来羞辱今天的自己。',
     sections: [
       {
-        title: '先把压力放小',
-        items: ['“还有 58 天”会让人紧，但它不是审判。', '别人的第 207 天，不等于你的今天必须满格。'],
+        title: '低电量版',
+        items: ['打开资料，只做 15 分钟。', '不用追进度，只标出一个不会的点。'],
       },
       {
-        title: '真正有用的点',
-        items: ['固定场景能减少进入学习的阻力。', '台灯、笔记、安静环境，本质是在帮大脑进入状态。'],
+        title: '标准版',
+        items: ['完成一个小节。', '做 5 道题并订正。'],
       },
       {
-        title: '三档计划',
-        items: ['低电量版：打开书，标出今天一页。', '标准版：做 25 分钟真题或背诵。', '爆发版：两轮 25 分钟，中间休息 5 分钟。'],
-      },
-      {
-        title: '今天只做一件事',
-        items: ['选一个最小任务，完成就收工也可以。', '不要在焦虑时重排整个人生计划。'],
+        title: '想冲一把版',
+        items: ['做一套限时小练习。', '结束后写 3 行复盘。'],
       },
     ],
-    actionChips: ['只做 25 分钟', '再降一档', '写今日小任务'],
-    shareCard: {
-      title: '玄龟替我把备考焦虑降噪了',
-      subtitle: '低负担行动卡',
-      quote: '你不用复制别人的 207 天，先保住今天的一小步。',
-      bullets: ['先降噪', '只做一件事', '累了就用低电量版'],
-      footer: '灵瑞伴看 · 玄龟',
-    },
-    followUpQuestions: ['我今天只剩 10 分钟怎么办？', '帮我改成低电量版', '明天怎么继续？'],
+    nextActions: ['今天只做一件事：开始 15 分钟', '把倒计时从屏幕上挪开', '完成后给自己留一个可继续的入口'],
+    memorySeed: '玄龟会记住：你不适合被猛推，适合被稳稳接住。',
+    shareQuote: '玄龟说，先别熄灭就好。',
+    tags: ['低电量', '稳住', '备考降噪'],
   },
 };
 
@@ -202,7 +139,7 @@ export async function mockAnalyze(
   const request = typeof reqOrScenarioId === 'object' ? reqOrScenarioId : undefined;
   const result =
     scenarioId === 'jiuwei' && request?.userImageBase64
-      ? withJiuweiUserImageCopy(getMockResult(scenarioId))
+      ? withJiuweiUserImageCopy(getMockResult(scenarioId), request.question)
       : getMockResult(scenarioId);
 
   return withDebug(result, {
@@ -233,26 +170,31 @@ function withDebug(
   };
 }
 
-function withJiuweiUserImageCopy(result: AnalyzeResponse): AnalyzeResponse {
+function withJiuweiUserImageCopy(result: AnalyzeResponse, question = ''): AnalyzeResponse {
+  const isNotRecommendedDemo = /男|男生|male|boy/i.test(question);
+
   return {
     ...result,
-    confidenceLabel: '已结合上传图',
-    sections: result.sections.map((section) =>
-      section.title === '你的版本怎么变'
-        ? {
-            ...section,
-            items: [
-              '我会以你上传图里可见的穿搭/场景为准，只迁移结构不评价外貌。',
-              '优先保留你自己的日常基底，再加入西装层次、材质反差或更柔和的光线。',
-            ],
-          }
-        : section
-    ),
-    shareCard: {
-      ...result.shareCard,
-      subtitle: '已结合上传图的风格迁移卡',
-      bullets: ['保留你的日常基底', '只抄结构不抄人', '用材质做反差'],
-    },
+    openingLine: isNotRecommendedDemo ? '九尾先把光挪一挪，不硬套。' : '九尾觉得，你这样真好看。',
+    emotionRead: isNotRecommendedDemo
+      ? '如果这套女装方向让你有点犹豫，九尾不推你硬套，我们换一种方式靠近它。'
+      : '这张图里的你不用变成博主，九尾只借一点风格的光给你。',
+    coreInsight: isNotRecommendedDemo ? '亮片和吊带别整套照搬，保留轮廓和光线就够靠近。' : '这套可以试，先保留自己，再借一点西装层次和材质反差。',
+    sections: [
+      {
+        title: isNotRecommendedDemo ? '九尾轻轻改一版' : '九尾往你身上挪一点',
+        items: isNotRecommendedDemo
+          ? ['保留西装外套的利落线条。', '把亮片缩小到领口、耳饰或包上。', '吊带裙可以换成深色上衣或垂坠衬衫。']
+          : ['米色或深色外套都可以先试。', '亮片不必全身上，小面积就会发光。', '拍照时留一个侧身或转身动作。'],
+      },
+      {
+        title: '九尾不让你丢掉自己',
+        items: ['不按颜值打分。', '不把博主身形当成标准。', '只抄结构、光线和松弛感。'],
+      },
+    ],
+    nextActions: isNotRecommendedDemo ? ['先试深色外套', '亮片只用小面积', '拍一张侧身光线照'] : ['找一件外套试轮廓', '选一个亮面小配饰', '拍一张自然光侧身'],
+    memorySeed: '九尾会记住：你不喜欢被改造成别人，只想把风格挪近一点。',
+    shareQuote: isNotRecommendedDemo ? '九尾说，不硬套，也能靠近那束光。' : '九尾说，我不用变成别人。',
   };
 }
 

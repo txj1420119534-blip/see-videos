@@ -22,7 +22,7 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     id: 'bixie',
     videoSrc: '/videos/bixie.mp4',
     lingruiName: '辟邪',
-    roleTitle: '反种草守护灵',
+    roleTitle: '守护型灵宠',
     feedTitle: '67 块买到无线类 G102？',
     feedAuthor: '@前行者鼠标种草视频',
     feedDescription: '前行者 A6 鼠标，强调低价、类 G102、网页驱动、首发福利、灯条还原。',
@@ -30,13 +30,13 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     ocrHint:
       '67块1毛5就能买到无线的类G102；甚至还能用网页驱动；首发双重福利；128元赠品；保持原版的原汁原味；连尾部灯条都完美还原。',
     defaultQuestion: '这条鼠标种草视频值不值得信？我该不该冲？',
-    ctaText: '让辟邪鉴定',
+    ctaText: '让辟邪看看值不值',
   },
   baize: {
     id: 'baize',
     videoSrc: '/videos/baize.mp4',
     lingruiName: '白泽',
-    roleTitle: '教程拆解灵',
+    roleTitle: '智慧型灵宠',
     feedTitle: '考公考编一次性上岸的秘诀',
     feedAuthor: '@备考经验分享',
     feedDescription:
@@ -45,13 +45,13 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     ocrHint:
       '考公考编一次性上岸的秘诀；至少留出一年的时间去备考；选择聚会全部都要推掉；不要只刷模拟试题；如果考虑选机构报班；如果机构选不对二战也好。',
     defaultQuestion: '这条备考建议到底讲了什么？我今天能先做哪一步？',
-    ctaText: '生成白泽行动卡',
+    ctaText: '让白泽拆成行动卡',
   },
   jiuwei: {
     id: 'jiuwei',
     videoSrc: '/videos/jiuwei.mp4',
     lingruiName: '九尾',
-    roleTitle: '风格结构识别灵',
+    roleTitle: '奇想型灵宠',
     feedTitle: '办公室到晚宴的氛围感变装',
     feedAuthor: '@风格穿搭视频',
     feedDescription:
@@ -67,7 +67,7 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     id: 'tianlu',
     videoSrc: '/videos/tianlu.mp4',
     lingruiName: '天禄',
-    roleTitle: 'AI 技巧落地灵',
+    roleTitle: '活力型灵宠',
     feedTitle: 'Claude + DeepSeek 没多模态？两步加眼睛',
     feedAuthor: '@AI 实用技巧分享',
     feedDescription:
@@ -76,13 +76,13 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     ocrHint:
       '你的Claude+DeepSeek没有多模态看不了图片；两步让你的Claude拥有千倍强大眼睛；到Claude对话框输入文本；给你豆包模型和它的Key，帮我做个视觉识别模型；等它跑完脚本；python C:/tmp/vision.py <图片路径> [可选的自定义问题]。',
     defaultQuestion: '这条 AI 教程我怎么安全、快速地照着做？',
-    ctaText: '让天禄安排步骤',
+    ctaText: '让天禄跑第一步',
   },
   xuangui: {
     id: 'xuangui',
     videoSrc: '/videos/xuangui.mp4',
     lingruiName: '玄龟',
-    roleTitle: '备考降噪陪伴灵',
+    roleTitle: '治愈型灵宠',
     feedTitle: '这是我备考的第 207 天，还有 58 天',
     feedAuthor: '@深夜备考记录',
     feedDescription:
@@ -90,7 +90,7 @@ export const SCENARIOS: Record<ScenarioId, ScenarioConfig> = {
     tags: ['备考', '自律', '焦虑降噪', '低负担计划', '陪伴'],
     ocrHint: '这是我备考的第207天；还有58天；谁懂啊。画面为夜间自习、台灯、笔记、安静但压迫的备考氛围。',
     defaultQuestion: '我刷到这种备考视频有点焦虑，今天到底该怎么做？',
-    ctaText: '让玄龟帮我稳住',
+    ctaText: '让玄龟降噪',
   },
 };
 

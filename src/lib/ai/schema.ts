@@ -24,6 +24,15 @@ export const AnalyzeRequestSchema = z.object({
     .optional(),
   frameImageBase64: z.string().optional(),
   userImageBase64: z.string().optional(),
+  conversationHistory: z
+    .array(
+      z.object({
+        role: z.enum(['user', 'assistant']),
+        content: z.string(),
+      })
+    )
+    .max(12)
+    .optional(),
   userContext: z
     .object({
       nickname: z.string().optional(),
@@ -32,18 +41,26 @@ export const AnalyzeRequestSchema = z.object({
       timeAvailable: z.string().optional(),
       city: z.string().optional(),
       preferences: z.array(z.string()).optional(),
+      lingruiMemory: z
+        .object({
+          callCount: z.number(),
+          lastChoice: z.string().optional(),
+          lastMemorySeed: z.string().optional(),
+          updatedAt: z.string().optional(),
+        })
+        .optional(),
     })
     .optional(),
 });
 
 export const AnalyzeResponseSchema = z.object({
   mode: z.enum(['real', 'mock']),
-  scenarioId: ScenarioIdSchema,
-  lingruiName: z.string(),
-  roleTitle: z.string(),
-  resultTitle: z.string(),
-  oneLineJudgement: z.string(),
-  confidenceLabel: z.string(),
+  roleId: ScenarioIdSchema,
+  roleName: z.string(),
+  openingLine: z.string(),
+  emotionRead: z.string(),
+  videoRead: z.string(),
+  coreInsight: z.string(),
   tags: z.array(z.string()),
   sections: z
     .array(
@@ -52,23 +69,19 @@ export const AnalyzeResponseSchema = z.object({
         items: z.array(z.string()).min(1),
       })
     )
-    .min(3)
+    .min(2)
     .max(5),
-  actionChips: z.array(z.string()),
-  shareCard: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    quote: z.string(),
-    bullets: z.array(z.string()).length(3),
-    footer: z.string(),
-  }),
-  followUpQuestions: z.array(z.string()).max(3),
+  nextActions: z.array(z.string()).max(3),
+  memorySeed: z.string(),
+  shareQuote: z.string(),
+  confidenceNote: z.string().optional(),
   debug: z
     .object({
       usedVision: z.boolean(),
       usedUserImage: z.boolean(),
       fallbackReason: z.string().optional(),
       rawModelName: z.string().optional(),
+      styleRewrite: z.boolean().optional(),
     })
     .optional(),
 });

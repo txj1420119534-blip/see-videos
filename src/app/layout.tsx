@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: '灵瑞伴看 — 抖音伴看 AI Agent',
+  title: '灵瑞伴看 — 抖音伴看灵宠',
   description:
-    '刷到不同视频，召唤不同灵瑞。辟邪帮你避坑，白泽帮你拆解，九尾帮你识风格，天禄帮你安排，玄龟帮你稳住。',
+    '刷到不同视频，召唤不同灵瑞。辟邪守护，白泽指引，九尾点亮灵感，天禄陪你开跑，玄龟帮你把声音调小。',
 };
 
 export const viewport: Viewport = {

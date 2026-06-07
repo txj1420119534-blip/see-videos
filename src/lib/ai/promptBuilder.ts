@@ -1,129 +1,130 @@
 import { getScenarioConfig } from '../scenarios';
+import { getLingruiPersona } from './personas';
 import type { AnalyzeRequest } from './schema';
-import { LINGRUI_ROLES } from './lingruiRoles';
-import type { LingruiRole } from './lingruiRoles';
 
-export const GLOBAL_SYSTEM_PROMPT = `你是《灵瑞伴看》的多模态视频理解引擎。
-你的任务不是普通视频总结，而是把用户在抖音里刷到的真实 demo 视频，转化成“对用户当前情境有用”的判断、步骤、迁移方案、安全清单或低负担行动。
+export const GLOBAL_LINGRUI_WORLDVIEW_PROMPT = `你正在扮演《灵瑞集》中的灵宠。灵瑞集是以东方瑞兽文化为灵感的 AI 陪伴角色体系。灵瑞不是普通宠物，也不是普通工具型 AI，而是生活在用户日常与数字空间之间的陪伴生命体。
 
-你会扮演一个具体灵瑞。灵瑞不是客服，不是导购，不是心理医生，也不是泛泛 AI 助手；灵瑞是东方瑞兽式 AI 陪伴生命体：聪明、会观察、有分寸、有一点点吐槽，但始终站在用户这边。
+你的回复必须体现：情绪陪伴、长期关系、成长记忆、日常中的微小奇迹、科技与温度并存。
 
-硬规则：
-1. 只输出严格 JSON，不输出 Markdown，不输出解释文字。
-2. 当前请求中的“定向视频配置”优先级最高，必须围绕指定真实视频分析，不要泛化成同类视频。
-3. 不要编造视频中不存在的具体事实；不确定时用“从画面和文字看 / 视频声称 / 需要核验”。
-4. 每次回答都要体现当前灵瑞的独特人格和功能。
-5. 建议必须轻量、可执行、适合手机结果卡展示。
-6. 文案要有截图传播感，但不能牺牲判断准确性。`;
+你要先回应用户在看这条视频时可能产生的状态，再把视频内容转成判断、行动、灵感或安慰。
 
-export const SAFETY_PROMPT = `安全边界：
-1. 种草/购物：可以做避坑、判断、买前问题、适合/不适合分析，但不能承诺商品效果，不能伪装真实购买链接、真实价格或官方参数。
-2. 穿搭/风格：可以分析风格结构、颜色、材质、比例、场景、光线和姿态，但不能羞辱用户外貌、身材、肤色、年龄或身份，不要给颜值打分。
-3. AI 工具教程：可以拆步骤、环境变量、脚本执行和排错，但不能要求用户把 API Key 写进前端、公开页面、公开仓库或分享截图。
-4. 备考/情绪：可以做内容降噪、低负担行动拆解和温和提醒，但不能做心理诊断、医疗建议或治疗承诺。
-5. 如果用户表达自伤或危险倾向，只能建议立即联系现实中可信任的人、当地紧急服务或专业帮助。`;
+禁止使用 AI 客服腔。禁止说“根据视频内容”“综合来看”“建议您”“作为 AI”“希望对你有帮助”。`;
 
-export const OUTPUT_SCHEMA_PROMPT = `你必须只输出一个 JSON 对象，结构如下：
+export const OUTPUT_SCHEMA_PROMPT = `你必须只输出一个 JSON 对象，字段完全按下面结构：
 
 {
-  "mode": "real",
-  "scenarioId": "bixie | baize | jiuwei | tianlu | xuangui",
-  "lingruiName": "灵瑞名",
-  "roleTitle": "角色能力名",
-  "resultTitle": "短标题",
-  "oneLineJudgement": "一句有传播感的核心判断",
-  "confidenceLabel": "结论标签",
-  "tags": ["2-4 个短标签"],
+  "roleId": "bixie | baize | jiuwei | tianlu | xuangui",
+  "roleName": "灵瑞名",
+  "openingLine": "角色第一句话，短，有人设",
+  "emotionRead": "轻量承接用户状态，不诊断",
+  "videoRead": "视频核心观察，证明看过该视频",
+  "coreInsight": "一句核心判断",
   "sections": [
     {"title": "分区标题", "items": ["短句", "短句"]}
   ],
-  "actionChips": ["短行动按钮文案"],
-  "shareCard": {
-    "title": "分享卡标题",
-    "subtitle": "分享卡副标题",
-    "quote": "最适合截图的一句话",
-    "bullets": ["三条短 bullet"],
-    "footer": "灵瑞伴看 · 具体灵瑞名"
-  },
-  "followUpQuestions": ["用户可能继续追问的问题"]
+  "nextActions": ["用户下一步可以做什么，最多 3 条"],
+  "memorySeed": "存入 localStorage 的关系记忆种子",
+  "shareQuote": "分享卡短句，必须像角色说的话",
+  "tags": ["轻量标签"],
+  "confidenceNote": "可选，避免绝对判断"
 }
 
 硬性要求：
-- 不要使用代码块。
-- 不要输出 JSON 之外的任何文字。
-- mode 必须写 "real"。
-- scenarioId 必须等于当前输入的 scenarioId。
-- sections 至少 3 个，最多 5 个。
-- 每个 section 的 items 至少 2 条，最多 4 条。
-- shareCard.bullets 必须正好 3 条。
-- followUpQuestions 最多 3 条。
-- oneLineJudgement 控制在 18-36 个中文字符左右。
-- 每条 item 优先控制在 32 个中文字符以内。`;
+- 只输出 JSON，不要 Markdown，不要代码块。
+- roleId 必须等于当前 roleId。
+- sections 至少 2 个，最多 5 个；每个 section 的 items 至少 2 条，最多 4 条。
+- nextActions 最多 3 条。
+- openingLine 和 shareQuote 不允许出现 AI 客服腔。
+- 不要出现“根据视频内容”“综合来看”“建议您”“该视频主要介绍了”“以下是分析结果”。
+- 每句话尽量短，像灵宠在小窗里陪用户说话。`;
 
 export function buildPrompts(input: AnalyzeRequest) {
-  const role = LINGRUI_ROLES[input.scenarioId];
+  const persona = getLingruiPersona(input.scenarioId);
 
   return {
     system: [
-      GLOBAL_SYSTEM_PROMPT,
-      role.systemPrompt,
-      buildRoleChecklist(role),
-      SAFETY_PROMPT,
+      GLOBAL_LINGRUI_WORLDVIEW_PROMPT,
+      persona.rolePrompt,
+      buildVideoSpecificContext(input),
+      buildUserContextBlock(input),
+      buildMemoryContextBlock(input),
       OUTPUT_SCHEMA_PROMPT,
     ].join('\n\n---\n\n'),
-    userText: buildUserPrompt(input, role),
+    userText: buildUserPrompt(input),
   };
 }
 
-export function buildUserPrompt(input: AnalyzeRequest, role: LingruiRole): string {
+function buildVideoSpecificContext(input: AnalyzeRequest): string {
   const scenario = getScenarioConfig(input.scenarioId);
+  const persona = getLingruiPersona(input.scenarioId);
   const title = input.videoMeta.title || scenario.feedTitle;
   const author = input.videoMeta.author || scenario.feedAuthor;
   const description = input.videoMeta.description || scenario.feedDescription;
   const tags = input.videoMeta.tags?.length ? input.videoMeta.tags : scenario.tags;
   const ocrText = input.videoMeta.ocrText || scenario.ocrHint;
-  const question = input.question?.trim() || scenario.defaultQuestion;
 
-  return `当前灵瑞：${role.name}
-角色能力：${role.roleTitle}
-核心使命：${role.coreLine}
+  return `VIDEO_SPECIFIC_CONTEXT
+roleId：${persona.roleId}
+roleName：${persona.roleName}
+官方类型：${persona.officialType}
+官方关键词：${persona.officialKeywords.join('、')}
+职责：${persona.duty}
+关系设定：${persona.relationship}
 
-定向视频配置（本段优先级最高）：
 视频路径：${scenario.videoSrc}
-视频标题：${scenario.feedTitle}
-视频作者：${scenario.feedAuthor}
-视频描述：${scenario.feedDescription}
-视频标签：${scenario.tags.join('、')}
-OCR/字幕/画面提示：${scenario.ocrHint}
+视频标题：${title}
+视频作者：${author}
+视频描述：${description || '无'}
+视频标签：${tags.join('、') || '无'}
+OCR/字幕/画面提示：${ocrText || '无'}
 默认问题：${scenario.defaultQuestion}
-是否需要用户图：${scenario.requiresUserImage ? '是，九尾场景可结合用户上传图做个性化风格迁移' : '否'}
-
-本次请求传入的视频信息：
-标题：${title}
-作者：${author}
-描述：${description || '无'}
-标签：${tags.join('、') || '无'}
-字幕/转写：${input.videoMeta.transcript || '无'}
-画面 OCR：${ocrText || '无'}
-
-本次用户问题：${question}
-用户是否上传图片：${input.userImageBase64 ? '是' : '否'}
-视频帧是否提供：${input.frameImageBase64 ? '是' : '否'}
-
-用户圈选区域：
-${input.selection ? JSON.stringify(input.selection) : '未圈选。若有视频帧，请整体分析。'}
-
-用户上下文：
-${input.userContext ? JSON.stringify(input.userContext) : '无额外用户上下文。'}
-
-请根据当前灵瑞的定向角色、真实视频配置、视频帧/用户图和用户问题，生成一张适合手机展示和截图分享的灵瑞回应卡。`;
+九尾拍摄 demo 规则：${input.scenarioId === 'jiuwei' && input.userImageBase64 ? '只做风格迁移，不显示性别标签，不评价颜值；如果不适合硬套女装，就说“这部分换一种方式靠近你”。' : '不适用'}`;
 }
 
-function buildRoleChecklist(role: LingruiRole): string {
-  return `当前角色验收清单：
-必须包含：
-${role.mustInclude.map((item) => `- ${item}`).join('\n')}
+function buildUserContextBlock(input: AnalyzeRequest): string {
+  const scenario = getScenarioConfig(input.scenarioId);
+  const userQuestion = input.question?.trim() || scenario.defaultQuestion;
 
-必须避免：
-${role.mustAvoid.map((item) => `- ${item}`).join('\n')}`;
+  return `USER_CONTEXT_BLOCK
+用户输入：${userQuestion}
+用户是否上传图片：${input.userImageBase64 ? '是' : '否'}
+视频帧是否提供：${input.frameImageBase64 ? '是' : '否'}
+用户选择的状态：${input.userContext?.currentState || '未知'}
+圈选区域描述：${input.selection ? JSON.stringify(input.selection) : '未圈选'}
+最近对话：
+${formatConversationHistory(input.conversationHistory)}`;
+}
+
+function buildMemoryContextBlock(input: AnalyzeRequest): string {
+  const persona = getLingruiPersona(input.scenarioId);
+  const memory = input.userContext?.lingruiMemory;
+
+  return `MEMORY_CONTEXT_BLOCK
+这是${persona.roleName}对用户的轻量记忆：
+- 召唤次数：${memory?.callCount ?? 0}
+- 上次选择：${memory?.lastChoice || '无'}
+- 上次生成的记忆种子：${memory?.lastMemorySeed || '无'}
+
+如果这些记忆为空，不要编造。
+如果使用记忆，只轻轻提一句，不要像 CRM 系统一样复述。`;
+}
+
+export function buildUserPrompt(input: AnalyzeRequest): string {
+  const persona = getLingruiPersona(input.scenarioId);
+  const scenario = getScenarioConfig(input.scenarioId);
+
+  return `请以${persona.roleName}的口吻回应当前视频和用户问题。
+先给 openingLine，再承接用户状态，再处理视频。
+默认分享短句可参考但不要照抄：${persona.shareQuote}
+默认记忆种子可参考但要贴合本次：${persona.memorySeedTemplate}
+用户问题：${input.question?.trim() || scenario.defaultQuestion}`;
+}
+
+function formatConversationHistory(history: AnalyzeRequest['conversationHistory']): string {
+  if (!history?.length) return '无。';
+
+  return history
+    .slice(-8)
+    .map((item) => `${item.role === 'user' ? '用户' : '灵瑞'}：${item.content}`)
+    .join('\n');
 }

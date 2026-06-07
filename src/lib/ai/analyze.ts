@@ -49,6 +49,7 @@ function normalizeFallbackReason(error: unknown): string {
       'LLM_EMPTY_RESPONSE',
       'LLM_JSON_PARSE_FAILED',
       'LLM_SCHEMA_INVALID',
+      'LLM_AI_SMELL',
     ].includes(reason)
   ) {
     return reason;

@@ -1,4 +1,5 @@
 import { SCENARIO_ORDER, SCENARIOS, type ScenarioId } from '@/lib/scenarios';
+import { LINGRUI_PERSONAS } from '@/lib/ai/personas';
 
 export type { ScenarioId };
 
@@ -73,11 +74,12 @@ const PRESENTATION: Record<
 export const scenarios: Scenario[] = SCENARIO_ORDER.map((id) => {
   const config = SCENARIOS[id];
   const presentation = PRESENTATION[id];
+  const persona = LINGRUI_PERSONAS[id];
 
   return {
     id,
     lingruiName: config.lingruiName,
-    lingruiTitle: config.roleTitle,
+    lingruiTitle: persona.officialType,
     lingruiImage: presentation.lingruiImage,
     videoTitle: config.feedTitle,
     author: config.feedAuthor,
@@ -87,8 +89,8 @@ export const scenarios: Scenario[] = SCENARIO_ORDER.map((id) => {
     posterSrc: presentation.posterSrc,
     ocrHint: config.ocrHint,
     defaultQuestion: config.defaultQuestion,
-    hookLine: presentation.hookLine,
-    cta: config.ctaText,
+    hookLine: persona.floatingLine,
+    cta: persona.ctaText,
     userPromptPlaceholder: config.defaultQuestion,
     needsUserImage: config.requiresUserImage,
     analysisIntent: presentation.analysisIntent,

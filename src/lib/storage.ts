@@ -1,6 +1,7 @@
 'use client';
 
 const STORAGE_KEY = 'lingrui-bankan-state';
+const MEMORY_KEY = 'lingrui-bankan-lingrui-memory';
 
 interface AppState {
   lastSummonedLingrui: string | null;
@@ -8,6 +9,15 @@ interface AppState {
   nickname: string;
   lastVisit: string;
 }
+
+export interface LingruiMemoryEntry {
+  callCount: number;
+  lastChoice?: string;
+  lastMemorySeed?: string;
+  updatedAt: string;
+}
+
+export type LingruiMemory = Record<string, LingruiMemoryEntry>;
 
 export function getState(): AppState {
   if (typeof window === 'undefined') {
@@ -30,4 +40,40 @@ export function saveState(patch: Partial<AppState>) {
     lastVisit: new Date().toISOString(),
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+}
+
+export function getLingruiMemory(roleId?: string): LingruiMemoryEntry | LingruiMemory | undefined {
+  if (typeof window === 'undefined') return roleId ? undefined : {};
+  try {
+    const raw = localStorage.getItem(MEMORY_KEY);
+    const memory = raw ? (JSON.parse(raw) as LingruiMemory) : {};
+    return roleId ? memory[roleId] : memory;
+  } catch {
+    return roleId ? undefined : {};
+  }
+}
+
+export function saveLingruiMemory(
+  roleId: string,
+  patch: Partial<Omit<LingruiMemoryEntry, 'callCount' | 'updatedAt'>> & { incrementCallCount?: boolean }
+) {
+  if (typeof window === 'undefined') return;
+  const all = (getLingruiMemory() as LingruiMemory) || {};
+  const current = all[roleId] || { callCount: 0, updatedAt: '' };
+  const updated: LingruiMemoryEntry = {
+    ...current,
+    ...patch,
+    callCount: current.callCount + (patch.incrementCallCount ? 1 : 0),
+    updatedAt: new Date().toISOString(),
+  };
+
+  delete (updated as LingruiMemoryEntry & { incrementCallCount?: boolean }).incrementCallCount;
+
+  localStorage.setItem(
+    MEMORY_KEY,
+    JSON.stringify({
+      ...all,
+      [roleId]: updated,
+    })
+  );
 }
